@@ -3,8 +3,8 @@ import axios from "axios";
 import calculateHoverSquares from "../../helper/calculateHoverSquares";
 import Board from "../board";
 import SelectForm from "../selectForm";
+import InfoCard from "../infoCard";
 import convertData from "../../helper/convertData";
-import { v4 as uuidv4 } from "uuid";
 
 const Game = () => {
   const [mode, setMode] = useState("");
@@ -46,16 +46,17 @@ const Game = () => {
     setIsHovered(!hoveredState);
     setHistory([...historyPoint, squares]);
     setStepNumber(historyPoint.length);
-    console.log(`squares[i]`, squares[i]);
     const choosenSquare = calculateHoverSquares(i, type);
     setHoveredSquares([
       ...hoveredSquares,
       { ...choosenSquare, status: squares[i] },
     ]);
+    console.log(`hoveredSquares`, hoveredSquares);
   };
+
   return (
     <>
-      <h1>React Squares Game</h1>
+      <h1 className="title">React Squares Game</h1>
       <div className="container">
         <div>
           <div className="nav-thumb">
@@ -72,16 +73,7 @@ const Game = () => {
           <h3 className="sub-title">Hover squares</h3>
           {hoveredSquares.length > 0 && (
             <ul>
-              {hoveredSquares.map((el) => {
-                const style = el.status ? "info-add" : "info-delete";
-                return (
-                  <li key={uuidv4()} className="list">
-                    <p className={`info ${style}`}>
-                      row {el.row} col {el.col}
-                    </p>
-                  </li>
-                );
-              })}
+              <InfoCard hoveredSquares={hoveredSquares} />
             </ul>
           )}
         </div>
