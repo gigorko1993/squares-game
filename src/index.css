@@ -46,7 +46,7 @@ h3 {
 
 .squares {
   background: #ffffff;
-  border: none;
+  border: 1px solid #000000;
   cursor: pointer;
   outline: none;
 }
@@ -83,9 +83,9 @@ h3 {
 }
 .select {
   display: inline-block;
-  width: 130px;
+  width: 150px;
   margin-right: 20px;
-  font-size: 30px;
+  font-size: 22px;
 }
 .nav-thumb {
   margin-bottom: 20px;

@@ -17,12 +17,18 @@ const Game = () => {
   const [hoveredSquares, setHoveredSquares] = useState([]);
   const hoveredState = isHovered ? false : true;
 
-  axios.defaults.baseURL = "http://demo1030918.mockable.io/";
-
   useEffect(() => {
     if (!mode) {
       (async () => {
-        const { data } = await axios.get();
+        const { data } = await axios("http://demo1030918.mockable.io/", {
+          method: "GET",
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+            withCredentials: true,
+            mode: "no-cors",
+          },
+        });
         return setMode(convertData(data));
       })();
     }
