@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import calculateHoverSquares from "../../helper/calculateHoverSquares";
+// import calculateHoverSquares from "../../helper/calculateHoverSquares";
 import Board from "../board";
 import SelectForm from "../selectForm";
 import convertData from "../../helper/convertData";
@@ -8,11 +8,11 @@ import convertData from "../../helper/convertData";
 const Game = () => {
   const [mode, setMode] = useState("");
   const [history, setHistory] = useState([Array(Number(25)).fill(null)]);
-  const [type, setType] = useState(5);
+  const [type, setType] = useState("5");
   const [stepNumber, setStepNumber] = useState(0);
-  const [isHovered, setIsHovered] = useState(true);
-  const stopGame = calculateHoverSquares(history[stepNumber], type);
-  const hoveredState = isHovered ? true : false;
+  const [isHovered, setIsHovered] = useState(false);
+  // const stopGame = calculateHoverSquares(history[stepNumber], type);
+  const hoveredState = isHovered ? false : true;
 
   axios.defaults.baseURL = "http://demo1030918.mockable.io/";
 
@@ -32,30 +32,37 @@ const Game = () => {
   };
 
   const handleMouseMove = (i) => {
+    if (!history[stepNumber]) {
+      setStepNumber(0);
+    }
     const historyPoint = history.slice(0, stepNumber + 1);
     const current = historyPoint[stepNumber];
     const squares = [...current];
-    if (stopGame || squares[i]) return;
-    squares[i] = hoveredState;
+    console.log(`squares`, squares);
+    squares[i] ? (squares[i] = false) : (squares[i] = hoveredState);
+    setIsHovered(!hoveredState);
     setHistory([...historyPoint, squares]);
     setStepNumber(historyPoint.length);
-    setIsHovered(hoveredState);
   };
 
   return (
     <>
       <h1>React Squares Game</h1>
-      <div>
-        <SelectForm mode={mode} onSelect={handleSelect} />
-        <button>Start</button>
-      </div>
-      <Board
-        squares={history[stepNumber]}
-        boardType={type}
-        onMouseEnter={handleMouseMove}
-      />
-      <div className="info-wrapper">
-        <h3>Hover squares</h3>
+      <div className="container">
+        <div>
+          <div>
+            <SelectForm mode={mode} onSelect={handleSelect} />
+            <button>Start</button>
+          </div>
+          <Board
+            squares={history[stepNumber] ? history[stepNumber] : history[0]}
+            boardType={type}
+            onMouseEnter={handleMouseMove}
+          />
+        </div>
+        <div className="info-wrapper">
+          <h3>Hover squares</h3>
+        </div>
       </div>
     </>
   );
