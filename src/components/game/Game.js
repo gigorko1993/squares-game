@@ -5,6 +5,7 @@ import Board from "../board";
 import SelectForm from "../selectForm";
 import InfoCard from "../infoCard";
 import convertData from "../../helper/convertData";
+import Button from "@material-ui/core/Button";
 
 const Game = () => {
   const [mode, setMode] = useState("");
@@ -12,8 +13,8 @@ const Game = () => {
   const [type, setType] = useState("5");
   const [stepNumber, setStepNumber] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [isActive, setIsActive] = useState(false);
   const [hoveredSquares, setHoveredSquares] = useState([]);
-  // const stopGame = calculateHoverSquares(history[stepNumber], type);
   const hoveredState = isHovered ? false : true;
 
   axios.defaults.baseURL = "http://demo1030918.mockable.io/";
@@ -36,6 +37,9 @@ const Game = () => {
   };
 
   const handleMouseMove = (i) => {
+    if (!isActive) {
+      return;
+    }
     if (!history[stepNumber]) {
       setStepNumber(0);
     }
@@ -51,7 +55,10 @@ const Game = () => {
       ...hoveredSquares,
       { ...choosenSquare, status: squares[i] },
     ]);
-    console.log(`hoveredSquares`, hoveredSquares);
+  };
+
+  const handleStart = () => {
+    setIsActive(!isActive);
   };
 
   return (
@@ -61,7 +68,13 @@ const Game = () => {
         <div>
           <div className="nav-thumb">
             <SelectForm mode={mode} onSelect={handleSelect} />
-            <button>Start</button>
+            <Button
+              variant="contained"
+              color={isActive ? "secondary" : "primary"}
+              onClick={handleStart}
+            >
+              {isActive ? " Stop" : "Start"}
+            </Button>
           </div>
           <Board
             squares={history[stepNumber] ? history[stepNumber] : history[0]}
@@ -72,9 +85,7 @@ const Game = () => {
         <div className="info-wrapper">
           <h3 className="sub-title">Hover squares</h3>
           {hoveredSquares.length > 0 && (
-            <ul>
-              <InfoCard hoveredSquares={hoveredSquares} />
-            </ul>
+            <InfoCard hoveredSquares={hoveredSquares} />
           )}
         </div>
       </div>
