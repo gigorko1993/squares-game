@@ -46,17 +46,19 @@ const Game = () => {
     setIsHovered(!hoveredState);
     setHistory([...historyPoint, squares]);
     setStepNumber(historyPoint.length);
+    console.log(`squares[i]`, squares[i]);
     const choosenSquare = calculateHoverSquares(i, type);
-    setHoveredSquares([...hoveredSquares, { ...choosenSquare }]);
-    console.log(`choosenSquare`, choosenSquare);
+    setHoveredSquares([
+      ...hoveredSquares,
+      { ...choosenSquare, status: squares[i] },
+    ]);
   };
-  console.log(`hoveredSquares@@@@@@ `, hoveredSquares);
   return (
     <>
       <h1>React Squares Game</h1>
       <div className="container">
         <div>
-          <div>
+          <div className="nav-thumb">
             <SelectForm mode={mode} onSelect={handleSelect} />
             <button>Start</button>
           </div>
@@ -67,16 +69,19 @@ const Game = () => {
           />
         </div>
         <div className="info-wrapper">
-          <h3>Hover squares</h3>
+          <h3 className="sub-title">Hover squares</h3>
           {hoveredSquares.length > 0 && (
             <ul>
-              {hoveredSquares.map((el) => (
-                <li key={uuidv4()}>
-                  <p>
-                    row {el.row} col {el.col}
-                  </p>
-                </li>
-              ))}
+              {hoveredSquares.map((el) => {
+                const style = el.status ? "info-add" : "info-delete";
+                return (
+                  <li key={uuidv4()} className="list">
+                    <p className={`info ${style}`}>
+                      row {el.row} col {el.col}
+                    </p>
+                  </li>
+                );
+              })}
             </ul>
           )}
         </div>
