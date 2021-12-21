@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/squares-game/static/css/main.b893b5d0.css",
-    "main.js": "/squares-game/static/js/main.a559acdb.js",
+    "main.js": "/squares-game/static/js/main.c8dfdb60.js",
     "static/js/787.27b02551.chunk.js": "/squares-game/static/js/787.27b02551.chunk.js",
     "index.html": "/squares-game/index.html",
     "main.b893b5d0.css.map": "/squares-game/static/css/main.b893b5d0.css.map",
-    "main.a559acdb.js.map": "/squares-game/static/js/main.a559acdb.js.map",
+    "main.c8dfdb60.js.map": "/squares-game/static/js/main.c8dfdb60.js.map",
     "787.27b02551.chunk.js.map": "/squares-game/static/js/787.27b02551.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b893b5d0.css",
-    "static/js/main.a559acdb.js"
+    "static/js/main.c8dfdb60.js"
   ]
 }
